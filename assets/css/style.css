@@ -1,0 +1,34 @@
+@font-face {
+    font-family: 'IRANSansWeb';
+
+    src: url('../fonts/IRANSansWeb.woff') format('woff');
+}
+
+.is h1, h2, h3, table, button, input, .jq-toast-heading, input[type=submit], .form-label ,.form-check-label , .rs_help {
+    font-family: "IRANSansWeb" !important;
+}
+
+.list_sentence .fas {
+    cursor: pointer;
+    transition: .1s;
+}
+
+.list_sentence .fas:hover {
+    color: #0d6efd;
+    transition: .1s;
+}
+
+table .icon i {
+    margin: 5px;
+}
+
+
+.jscolor{
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    text-align: left;   cursor: pointer;
+}
+.rs_help{
+  font-size: 12px;
+    color: #828282;
+}

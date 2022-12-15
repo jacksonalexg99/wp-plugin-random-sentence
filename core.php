@@ -11,7 +11,7 @@ Text Domain: جملات تصادفی
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	die( "مجوز دسترسی نداری" );
+	die( "!! مجوز دسترسی نداری!!" );
 }
 
 define( 'RS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );

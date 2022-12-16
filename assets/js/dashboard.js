@@ -38,12 +38,14 @@ jQuery(document).ready(function ($) {
                         loaderBg: '#fff',
                         allowToastClose: false,
                     })
-                    $('.load_add i').removeClass('fa-spinner fa-spin')
-                    $('#add_sentence').removeAttr('disabled')
+
 
                 }
             },
             complete: function (response) {
+                $('#sentence').val("");
+                $('.load_add i').removeClass('fa-spinner fa-spin')
+                $('#add_sentence').removeAttr('disabled')
             },
             error: function (error) {
                 if (error.error) {
@@ -159,8 +161,6 @@ jQuery(document).ready(function ($) {
 
             success: function (response) {
                 if (response) {
-                    //  $(".list_sentence").load(document.URL +  ".list_sentence");
-                    //  $(".list_sentence").load(document.URL);
                     $.toast({
                         heading: 'موفقیت آمیز',
                         text: response.message,
@@ -175,7 +175,7 @@ jQuery(document).ready(function ($) {
             }
         })
     })
-    var check_transparent="off";
+    var check_transparent = "off";
     $('#rs_form_setting').on('submit', function (e) {
         e.preventDefault();
         let rs_fontsize = $('#rs_fontsize').val()
@@ -196,7 +196,6 @@ jQuery(document).ready(function ($) {
         });
 
 
-
         $.ajax({
             url: '/wp-admin/admin-ajax.php',
             type: "post",
@@ -206,6 +205,10 @@ jQuery(document).ready(function ($) {
                 rs_color: rs_color,
                 rs_bgcolor: rs_bgcolor,
                 check_transparent: check_transparent
+            },
+            beforeSend:function () {
+                $('.load_add i').addClass('fa-spinner fa-spin')
+                $('#add_setting_sentence').attr('disabled', 'disabled')
             },
             success: function (response) {
                 $.toast({
@@ -217,6 +220,10 @@ jQuery(document).ready(function ($) {
                     loaderBg: '#fff',
                     allowToastClose: false,
                 })
+            },
+            complete:function () {
+                $('.load_add i').removeClass('fa-spinner fa-spin')
+                $('#add_setting_sentence').removeAttr('disabled')
             }
         })
     })

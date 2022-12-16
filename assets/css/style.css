@@ -4,7 +4,7 @@
     src: url('../fonts/IRANSansWeb.woff') format('woff');
 }
 
-.is h1, h2, h3, table, button, input, .jq-toast-heading, input[type=submit], .form-label ,.form-check-label , .rs_help {
+.is h1, h2, h3, table, button, textarea,  input, .jq-toast-heading, input[type=submit], .form-label ,.form-check-label , .rs_help  {
     font-family: "IRANSansWeb" !important;
 }
 

@@ -16,13 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'RS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'RS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-
-
 function create_table_sentence() {
 	global $wpdb;
 	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-
-
 	$table_name = $wpdb->prefix . 'sentence';
 	$sql        = "CREATE TABLE `${table_name}` 
                 (

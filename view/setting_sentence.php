@@ -25,11 +25,9 @@
 
             <label class="form-check-label" for="check_transparent">شفاف</label>
 
-
             <p class="rs_help mt-3">در صورت فعال بودن شفاف، رنگ پس زمینه غیر فعال خواهد شد</p>
         </div>
         <div class="mb-3  col-3 col-lg-1">
-
         </div>
         <input type="submit" id="add_setting_sentence" class="btn btn-success  mt-4" value="ذخیره">
         <div class=" me-3 mt-1 load_add">

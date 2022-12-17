@@ -59,6 +59,11 @@ if ( is_admin() ) {
 		wp_enqueue_script( 'popper_rs', RS_PLUGIN_URL . 'assets/js/popper.min.js','', '1.0.0', );
 		wp_enqueue_script( 'toast_rs', RS_PLUGIN_URL . 'assets/js/toast.js' );
 	    wp_enqueue_script( 'jscolor_rs', RS_PLUGIN_URL . 'assets/js/jscolor.min.js', [ 'jquery' ],'1.0.0' );
+
+		wp_localize_script('script_rs','wp_nonce',[
+			"nonce"=>wp_create_nonce()
+		]);
+
 	}
 } else {
 	include_once RS_PLUGIN_DIR . '_inc/random-sentence.php';

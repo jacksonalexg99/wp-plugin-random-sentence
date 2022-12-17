@@ -1,10 +1,11 @@
 // let j = jQuery.noConflict();
-jQuery(document).ready(function ($) {
 
+jQuery(document).ready(function ($) {
 
     $('#add_form_sentence').on('submit', function (e) {
         e.preventDefault();
         let text = $('#sentence').val();
+        let nonce= wp_nonce.nonce
         if (text == "") {
             $.toast({
                 heading: 'فیلد مورد نظر بدون مقدار است',
@@ -21,7 +22,8 @@ jQuery(document).ready(function ($) {
             type: 'post',
             data: {
                 action: 'save_sentence',
-                text: text
+                text: text,
+                nonce:nonce
             },
             beforeSend: function () {
                 $('.load_add i').addClass('fa-spinner fa-spin')
@@ -65,16 +67,17 @@ jQuery(document).ready(function ($) {
     $('.delete_sentence').on('click', function () {
         let el = $(this);
         let id = el.data('id');
+        let nonce= wp_nonce.nonce;
         if (confirm('جمله مورد نظر حذف شود ؟')) {
             $.ajax({
                 url: "/wp-admin/admin-ajax.php",
                 type: "post",
                 data: {
                     action: "remove_sentence",
-                    id: id
+                    id: id,
+                    nonce:nonce,
                 },
                 beforeSend: function () {
-
                     el.removeClass('fa-trash').addClass('fa-sync fa-spin')
                 },
                 success: function (response) {
@@ -89,7 +92,6 @@ jQuery(document).ready(function ($) {
                             allowToastClose: false,
                         })
                         el.parents('tr').remove();
-
                     }
                 },
                 error: function (error) {
@@ -106,8 +108,6 @@ jQuery(document).ready(function ($) {
                     }
                 }
             })
-        } else {
-            // alert('Why did you press cancel? You should have confirmed');
         }
 
 
@@ -139,6 +139,7 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
         let id = $('#id').val();
         let text = $('#sentence').val();
+        let nonce= wp_nonce.nonce
         if (text == "") {
             $.toast({
                 heading: 'فیلد مورد نظر بدون مقدار است',
@@ -156,7 +157,8 @@ jQuery(document).ready(function ($) {
             data: {
                 action: "update_sentence",
                 id: id,
-                text: text
+                text: text,
+                nonce:nonce
             },
 
             success: function (response) {
@@ -181,6 +183,7 @@ jQuery(document).ready(function ($) {
         let rs_fontsize = $('#rs_fontsize').val()
         let rs_color = $('#rs_color').val()
         let rs_bgcolor = $('#rs_bgcolor').val()
+        let nonce= wp_nonce.nonce
 
 
         $("#check_transparent").change("click", function () {
@@ -201,12 +204,13 @@ jQuery(document).ready(function ($) {
             type: "post",
             data: {
                 action: "save_setting",
+                nonce:nonce,
                 rs_fontsize: rs_fontsize,
                 rs_color: rs_color,
                 rs_bgcolor: rs_bgcolor,
                 check_transparent: check_transparent
             },
-            beforeSend:function () {
+            beforeSend: function () {
                 $('.load_add i').addClass('fa-spinner fa-spin')
                 $('#add_setting_sentence').attr('disabled', 'disabled')
             },
@@ -221,7 +225,7 @@ jQuery(document).ready(function ($) {
                     allowToastClose: false,
                 })
             },
-            complete:function () {
+            complete: function () {
                 $('.load_add i').removeClass('fa-spinner fa-spin')
                 $('#add_setting_sentence').removeAttr('disabled')
             }

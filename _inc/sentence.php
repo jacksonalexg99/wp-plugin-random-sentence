@@ -6,7 +6,9 @@ add_action( 'wp_ajax_update_sentence', 'update_sentence' );
 add_action( 'wp_ajax_save_setting', 'save_setting' );
 
 function save_sentence() {
-
+	if(!wp_verify_nonce($_POST['nonce'])){
+		die('مجوز دسترسی نداری');
+	}
 	global $wpdb;
 	$table = $wpdb->prefix . 'sentence';
 	$text  = sanitize_textarea_field( $_POST['text'] );
@@ -29,6 +31,9 @@ function save_sentence() {
 }
 
 function remove_sentence() {
+	if(!wp_verify_nonce($_POST['nonce'])){
+		die('مجوز دسترسی نداری');
+	}
 	global $wpdb;
 	$table = $wpdb->prefix . 'sentence';
 	$id    = intval( $_POST['id'] );
@@ -52,9 +57,7 @@ function get_sentence() {
 	$table    = $wpdb->prefix . 'sentence';
 	$res      = $wpdb->get_results( "SELECT * FROM $table" );
 	$sentence = json_decode( json_encode( $res ), true );
-
 	return $sentence;
-
 }
 
 function fetch_sentence() {
@@ -74,6 +77,9 @@ function fetch_sentence() {
 }
 
 function update_sentence() {
+	if(!wp_verify_nonce($_POST['nonce'])){
+		die('مجوز دسترسی نداری');
+	}
 	global $wpdb;
 	$table = $wpdb->prefix . 'sentence';
 	$id    = intval( $_POST['id'] );
@@ -82,9 +88,10 @@ function update_sentence() {
 	$wpdb->update( $table, [ 'text' => $text ], [ 'id' => $id ], [ '%s' ], [ '%d' ] );
 
 }
-
 function save_setting() {
-//	var_dump(  $_POST['check_transparent'] );
+	if(!wp_verify_nonce($_POST['nonce'])){
+		die('مجوز دسترسی نداری');
+	}
 	$rs_fontsize       = intval( $_POST['rs_fontsize'] );
 	$rs_color          = sanitize_text_field( $_POST['rs_color'] );
 	$rs_bgcolor        = sanitize_text_field( $_POST['rs_bgcolor'] );
@@ -94,8 +101,6 @@ function save_setting() {
 	} else {
 		$check = 0;
 	}
-
-
 	update_option( '_rs_fontsize', $rs_fontsize );
 	update_option( '_rs_textcolor', $rs_color );
 	update_option( '_rs_bgcolor', $rs_bgcolor );

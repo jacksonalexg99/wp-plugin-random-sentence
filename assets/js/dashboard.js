@@ -177,6 +177,7 @@ jQuery(document).ready(function ($) {
         })
     })
     var check_transparent = "off";
+    var check_widget = "off";
     $('#rs_form_setting').on('submit', function (e) {
         e.preventDefault();
         let rs_fontsize = $('#rs_fontsize').val()
@@ -186,18 +187,11 @@ jQuery(document).ready(function ($) {
 
 
         $("#check_transparent").change("click", function () {
-
-            if (this.checked) {
-                check_transparent = "on"
-            }
-            if (!this.checked) {
-                check_transparent = "off"
-
-            }
-
+            this.checked ?  check_transparent = "on" : check_transparent = "off";
         });
-
-
+        $("#check_widget").change("click", function () {
+            this.checked ?  check_widget = "on" : check_widget = "off";
+        });
         $.ajax({
             url: '/wp-admin/admin-ajax.php',
             type: "post",
@@ -207,7 +201,8 @@ jQuery(document).ready(function ($) {
                 rs_fontsize: rs_fontsize,
                 rs_color: rs_color,
                 rs_bgcolor: rs_bgcolor,
-                check_transparent: check_transparent
+                check_transparent: check_transparent,
+                check_widget: check_widget
             },
             beforeSend: function () {
                 $('.load_add i').addClass('fa-spinner fa-spin')

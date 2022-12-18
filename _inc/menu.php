@@ -23,6 +23,15 @@ function rs_register_admin_menu() {
 		'random-sentence-setting',
 		'rs_page_setting',
 	);
+	add_submenu_page(
+		'random-sentence',
+		'راهنما',
+		'راهنما',
+		'manage_options',
+		'random-sentence-help',
+		'rs_page_help',
+
+	);
 }
 
 function rs_page_list() {
@@ -36,7 +45,9 @@ function rs_page() {
 function rs_page_setting(){
 	include_once RS_PLUGIN_DIR . 'view/setting_sentence.php';
 }
-
+function rs_page_help(){
+	include_once RS_PLUGIN_DIR . 'view/help_sentence.php';
+}
 
 add_action( 'admin_menu', 'rs_register_admin_menu' );
 

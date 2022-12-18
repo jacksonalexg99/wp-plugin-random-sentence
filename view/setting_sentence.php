@@ -1,5 +1,5 @@
 <div class="container  mt-2 is">
-    <h3>تنظیمات استایل دهی</h3>
+    <h3>تنظیمات </h3>
     <form id="rs_form_setting" action="" class="mt-3">
         <div class="mb-3 col-4 col-lg-1 ">
             <label for="rs_fontsize" class="form-label">سایز جمله</label>
@@ -17,17 +17,17 @@
             <br>
             <input class="ms-4" value="<?php echo get_option( '_rs_bgcolor', true ); ?>" id="rs_bgcolor"
                    data-jscolor="{}">
-
-
             <input type="checkbox" class="form-check-input" <?php echo $check==1 ? "checked" : '' ?>
                    id="check_transparent"  >
-
-
             <label class="form-check-label" for="check_transparent">شفاف</label>
-
             <p class="rs_help mt-3">در صورت فعال بودن شفاف، رنگ پس زمینه غیر فعال خواهد شد</p>
         </div>
-        <div class="mb-3  col-3 col-lg-1">
+        <hr>
+     <div class="mb-3  col-6">
+	        <?php  $check_widget = get_option( '_rs_widget' ); ?>
+            <input type="checkbox" class="form-check-input" <?php echo $check_widget==1 ? "checked" : '' ?>
+                   id="check_widget"  >
+            <label class="form-check-label" for="check_widget">فعال سازی سمت پنل</label>
         </div>
         <input type="submit" id="add_setting_sentence" class="btn btn-success  mt-4" value="ذخیره">
         <div class=" me-3 mt-1 load_add">

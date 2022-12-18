@@ -67,6 +67,7 @@ if ( is_admin() ) {
 	}
 } else {
 	include_once RS_PLUGIN_DIR . '_inc/random-sentence.php';
+	include_once RS_PLUGIN_DIR . '_inc/shortcode.php';
 }
 
 add_action( 'admin_enqueue_scripts', 'register_style_js' );

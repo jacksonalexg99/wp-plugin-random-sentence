@@ -1,7 +1,6 @@
 // let j = jQuery.noConflict();
 
 jQuery(document).ready(function ($) {
-
     $('#add_form_sentence').on('submit', function (e) {
         e.preventDefault();
         let text = $('#sentence').val();

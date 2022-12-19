@@ -24,8 +24,9 @@
     </div>
 </div>
 
-<div class="container mt-2">
+<div class="container is mt-2">
     <h3>لیست جملات</h3>
+	<?php if(get_sentence()): ?>
     <table class="table list_sentence table-hover mt-4">
         <thead>
         <tr>
@@ -35,17 +36,25 @@
         </tr>
         </thead>
         <tbody>
-		<?php foreach ( get_sentence() as $item ): ?>
-            <tr>
-                <th scope="row" class=" col-1"><?php echo $item['id'] ?></th>
-                <td><?php echo $item['text'] ?></td>
-                <td class="icon col-1">
-                    <i class="fas fa-edit edit_sentence" data-id="<?php echo $item['id'] ?>" data-bs-toggle="modal"
-                       data-bs-target="#edit"></i>
-                    <i class="fas fa-trash  delete_sentence" data-id="<?php echo $item['id'] ?>"></i>
-                </td>
-            </tr>
-		<?php endforeach; ?>
+
+
+	        <?php foreach ( get_sentence() as $item ): ?>
+                <tr>
+                    <th scope="row" class=" col-1"><?php echo $item['id'] ?></th>
+                    <td><?php echo $item['text'] ?></td>
+                    <td class="icon col-1">
+                        <i class="fas fa-edit edit_sentence" data-id="<?php echo $item['id'] ?>" data-bs-toggle="modal"
+                           data-bs-target="#edit"></i>
+                        <i class="fas fa-trash  delete_sentence" data-id="<?php echo $item['id'] ?>"></i>
+                    </td>
+                </tr>
+	        <?php endforeach; ?>
+
+
+
         </tbody>
     </table>
+	<?php else: ?>
+        <p class="alert alert-info">هیچ جمله ای برای نمایش وجود نداره , از منو ایجاد جملات تصادفی اولین جمله خودتو ایجاد کن.</p>
+	<?php endif; ?>
 </div>

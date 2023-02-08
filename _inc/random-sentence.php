@@ -1,5 +1,5 @@
 <?php
-echo "";
+
 
 function random_sentence() {
 	global $wpdb;

@@ -1,5 +1,4 @@
 // let j = jQuery.noConflict();
-
 jQuery(document).ready(function ($) {
     $('#add_form_sentence').on('submit', function (e) {
         e.preventDefault();
@@ -19,6 +18,8 @@ jQuery(document).ready(function ($) {
         $.ajax({
             url: '/wp-admin/admin-ajax.php',
             type: 'post',
+            dataType: 'json',
+
             data: {
                 action: 'save_sentence',
                 text: text,
@@ -38,8 +39,10 @@ jQuery(document).ready(function ($) {
                         closest: false,
                         loaderBg: '#fff',
                         allowToastClose: false,
-                    })
+                    });
 
+
+                    $('#ks_data').html(response.content);
 
                 }
             },
@@ -59,11 +62,13 @@ jQuery(document).ready(function ($) {
                         loaderBg: '#fff',
                         allowToastClose: false,
                     })
+
                 }
+
             },
         })
     })
-    $('.delete_sentence').on('click', function () {
+        $(document).on('click','.delete_sentence',function(){
         let el = $(this);
         let id = el.data('id');
         let nonce= wp_nonce.nonce;
@@ -71,6 +76,8 @@ jQuery(document).ready(function ($) {
             $.ajax({
                 url: "/wp-admin/admin-ajax.php",
                 type: "post",
+                dataType: 'json',
+
                 data: {
                     action: "remove_sentence",
                     id: id,
@@ -108,15 +115,16 @@ jQuery(document).ready(function ($) {
                 }
             })
         }
-
-
     })
-    $('.edit_sentence').on('click', function () {
+
+    $(document).on('click','.edit_sentence', function () {
+
         let el = $(this);
         let id = el.data('id');
         $.ajax({
             url: "/wp-admin/admin-ajax.php",
             type: "post",
+
             data: {
                 action: "fetch_sentence",
                 id: id
@@ -127,19 +135,22 @@ jQuery(document).ready(function ($) {
             },
             success: function (response) {
                 let data = JSON.parse(response);
-                $('#sentence').val(data.text)
+
                 $('#id').val(data.id)
+                 $('#sentence_text').val(data.text);
                 $('.load i').hide();
                 $('.load textarea').css('opacity', "1")
             }
         })
     })
-    $('#form_update_sentence').on('submit', function (e) {
+    $(document).on('submit','#form_update_sentence', function (e) {
+
         e.preventDefault();
         let id = $('#id').val();
-        let text = $('#sentence').val();
+        let text = $('#sentence_text').val();
+
         let nonce= wp_nonce.nonce
-        if (text == "") {
+        if (text === "") {
             $.toast({
                 heading: 'فیلد مورد نظر بدون مقدار است',
                 showHideTransition: 'slide',
@@ -153,15 +164,20 @@ jQuery(document).ready(function ($) {
         $.ajax({
             url: '/wp-admin/admin-ajax.php',
             type: "post",
+            dataType: 'json',
             data: {
                 action: "update_sentence",
                 id: id,
                 text: text,
                 nonce:nonce
             },
-
+           beforeSend:function (response) {
+               let id = $('#id').val();
+               let id_text='#text-sentence-'+id;
+               $(id_text).css("opacity","0.3");
+           },
             success: function (response) {
-                if (response) {
+
                     $.toast({
                         heading: 'موفقیت آمیز',
                         text: response.message,
@@ -170,9 +186,13 @@ jQuery(document).ready(function ($) {
                         closest: false,
                         loaderBg: '#fff',
                         allowToastClose: false,
-                    })
-                    location.reload();
-                }
+                    });
+                     let id_text='#text-sentence-'+response.id;
+                     $(id_text).text(response.text);
+                     $(id_text).css("opacity","1");
+            },
+            error:function () {
+              console.log("error");
             }
         })
     })

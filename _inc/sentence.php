@@ -17,14 +17,30 @@ function save_sentence() {
 	];
 	$res   = $wpdb->insert( $table, $data, [ '%s' ] );
 
+	$get      = $wpdb->get_results( "SELECT * FROM $table ORDER BY id DESC " );
+
+	$sentence = json_decode(json_encode( $get ),true);
+	$html_output='';
+    foreach ($sentence as $sen)
+    {
+	    $html_output.='<tr><th class="col-1">'.$sen['id'].'</th>
+                    <td id="text-sentence-'.$sen['id'].'">'.$sen['text'].'</td>
+                    <td class="icon col-1">
+                        <i class="fas fa-edit edit_sentence" data-id="'.$sen['id'].'" data-bs-toggle="modal"
+                           data-bs-target="#edit"></i>
+                        <i  class="fas fa-trash delete_sentence deletetest" data-id="'.$sen['id'].'"></i>
+                    </td></tr>';
+    }
 	if ( $res ) {
 		wp_send_json( [
 			"success" => "true",
+			"content"=>$html_output,
 			"message" => "با  موفقیت اضافه شد",
 		], 200 );
 	} else {
 		wp_send_json( [
 			"error"   => "true",
+			"content"=>$html_output,
 			"message" => "خطایی رخ داده است"
 		], 403 );
 	}
@@ -55,11 +71,12 @@ function remove_sentence() {
 function get_sentence() {
 	global $wpdb;
 	$table    = $wpdb->prefix . 'sentence';
-	$res      = $wpdb->get_results( "SELECT * FROM $table" );
+	$res      = $wpdb->get_results( "SELECT * FROM $table ORDER BY id DESC " );
 	$sentence = json_decode( json_encode( $res ), true );
 
 	return $sentence;
 }
+
 
 function fetch_sentence() {
 	global $wpdb;
@@ -85,8 +102,18 @@ function update_sentence() {
 	$table = $wpdb->prefix . 'sentence';
 	$id    = intval( $_POST['id'] );
 	$text  = sanitize_textarea_field( $_POST['text'] );
-	var_dump( $text );
-	$wpdb->update( $table, [ 'text' => $text ], [ 'id' => $id ], [ '%s' ], [ '%d' ] );
+
+	  $wpdb->update( $table, [ 'text' => $text ], [ 'id' => $id ], [ '%s' ], [ '%d' ] );
+		 $get_row   = $wpdb->get_row( "SELECT * FROM $table WHERE id = $id" );
+
+		 $data=[
+			 'id'=>$get_row->id,
+			 'text'=>$get_row->text
+		 ];
+		echo wp_json_encode($data,200);
+		 wp_die();
+
+
 
 }
 
@@ -99,12 +126,19 @@ function save_setting() {
 	$rs_bgcolor        = sanitize_text_field( $_POST['rs_bgcolor'] );
 	$check_transparent = sanitize_text_field( $_POST['check_transparent'] );
 	$check_widget      = sanitize_text_field( $_POST['check_widget'] );
-	$check_transparent == "on" ? $check = 1 : $check = 0;
-	$check_widget == "on" ? $check_w = 1 : $check_w = 0;
+
+	if ($check_transparent==="on"){
+		update_option( '_rs_transparent', 1 );
+	}else if ($check_transparent==="off"){
+		update_option( '_rs_transparent', 0 );
+	}
+
+	if ($check_widget==="on"){
+		update_option( '_rs_widget', 1 );
+	}else if ($check_widget==="off"){
+		update_option( '_rs_widget', 0 );
+	}
 	update_option( '_rs_fontsize', $rs_fontsize );
 	update_option( '_rs_textcolor', $rs_color );
 	update_option( '_rs_bgcolor', $rs_bgcolor );
-	update_option( '_rs_transparent', $check );
-	update_option( '_rs_widget', $check_w );
-
 }
